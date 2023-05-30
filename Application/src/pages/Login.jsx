@@ -20,7 +20,7 @@ const Login = () => {
         e.preventDefault()
         const {email , password} = user
         if(!email || !password) {
-            
+            toast.warn('a7a')
             showAlert()
             return
         }

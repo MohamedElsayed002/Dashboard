@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 const App = () => {
   return (
     <>
+        <ToastContainer theme="colored"/>
       <Routes>
       <Route path="/landing" element={<LandingPage/>} />
       <Route path="/login" element={<Login/>}/>
@@ -14,8 +15,6 @@ const App = () => {
       </Route>
       <Route path="*" element={<Error/>} />
     </Routes>
-    <ToastContainer theme="colored"/>
-
     </>
   )
 }
