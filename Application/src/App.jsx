@@ -1,6 +1,6 @@
 
 import {Routes , Route} from 'react-router-dom'
-import { SharedLayout , LandingPage , Login , Register } from './pages'
+import { SharedLayout , LandingPage , Login , Register , Error } from './pages'
 import { ToastContainer } from 'react-toastify';
 const App = () => {
   return (
@@ -10,7 +10,9 @@ const App = () => {
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>} />
       <Route path="/" element={<SharedLayout/>}>
+
       </Route>
+      <Route path="*" element={<Error/>} />
     </Routes>
     <ToastContainer theme="colored"/>
 
