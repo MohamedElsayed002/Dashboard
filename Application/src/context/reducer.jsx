@@ -20,5 +20,14 @@ export const reducer = (state,action) => {
         }
     }
 
+    if(action.type === 'USER_LOGGED_IN') {
+        return {...state,
+            userr : action.payload.data.data.isExist,
+            token : action.payload.data.data.token,
+            showAlert : true,
+            alertText : 'user created!'
+        }
+    }
+
     throw new Error('there is no reducer ')
 }

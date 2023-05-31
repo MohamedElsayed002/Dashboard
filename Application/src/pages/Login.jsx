@@ -2,11 +2,10 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import {NavLink} from 'react-router-dom'
 import { useAppContext } from '../context/context'
-import {toast} from 'react-toastify'
 import {useState} from 'react'
 const Login = () => {
 
-    const {showAlert , alertText} = useAppContext()
+    const {showAlert , alertText,LoginUser,loginLoading , alertType} = useAppContext()
     const [user,setUser] = useState({
         email : '',
         password : ''
@@ -18,14 +17,9 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const {email , password} = user
-        if(!email || !password) {
-            toast.warn('a7a')
-            showAlert()
-            return
-        }
-        console.log('congrats')
-
+        // console.log(user)
+        showAlert()
+        LoginUser(user)
     }
 
     return (
@@ -34,7 +28,7 @@ const Login = () => {
             <Form className="border p-4">
                 {
                     alertText &&  (
-                    <h3 style={{background : 'red' , padding : '10px'}}>{alertText}</h3>
+                    <h3 style={{background   : 'red' , padding : '10px'}}>{alertText}</h3>
                         )   
 
                 }
@@ -63,10 +57,12 @@ const Login = () => {
                 <Button  
                         type="button"
                         onClick={handleSubmit}
+                        disabled={loginLoading}
                 >
-                    Submit
+                    {loginLoading ? 'loading...' : 'submit'}
                 </Button> Need an account? <NavLink to="/register">Register</NavLink>
             </Form>
+            <NavLink to="/">dd</NavLink>
         </div>
     )
 }

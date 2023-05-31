@@ -12,8 +12,9 @@ const Register = async (req,res) => {
         throw new Error('please choose unique email')
     }
     let user = await userModel.create({email,name,password,role})
+
     let token = user.CreateJWT()
-    res.status(201).json({message : "user created successfully" , user , token})
+    res.status(201).json({message : "user created successfully " , user , token})
 }
 
 
@@ -23,7 +24,7 @@ const Login = async (req,res) => {
         throw new Error('please all fields must be provided')
     }
 
-    let isExist = await userModel.findOne({email  : email}) 
+    let isExist = await userModel.findOne({email  : email})
     if(!isExist) {
         throw new Error('user not found')
     }
