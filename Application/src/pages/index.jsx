@@ -3,6 +3,7 @@ import LandingPage from "./LandingPage";
 import Login from "./Login";
 import Register from "./Register";
 import Error from "./Error";
+import Confirmation from "./Confirmation";
 
 
 export  {
@@ -10,5 +11,6 @@ export  {
     LandingPage,
     Login,
     Register,
-    Error
+    Error,
+    Confirmation
 }
