@@ -1,8 +1,8 @@
 
 import {Routes , Route} from 'react-router-dom'
-import { SharedLayout , LandingPage , Login , Register , Error , Confirmation , ProtectedUser } from './pages'
+import { SharedLayout , LandingPage , Login , Register , Error , Confirmation , ProtectedUser , Products } from './pages'
 import { ToastContainer } from 'react-toastify';
-import { UpdateUser , Admin } from './pages/user';
+import { UpdateUser , Admin , ChangePassword } from './pages/user';
 const App = () => {
   return (
     <>
@@ -18,8 +18,10 @@ const App = () => {
           </ProtectedUser>
           }
       >
-          <Route index element={<UpdateUser/>} />
+          <Route index element={<Products/>} />
           <Route path="admin" element={<Admin/>} />
+          <Route path="updateUser" element={<UpdateUser/>} />
+          <Route path="changePassword" element={<ChangePassword/>} />
       </Route>
       <Route path="*" element={<Error/>} />
     </Routes>

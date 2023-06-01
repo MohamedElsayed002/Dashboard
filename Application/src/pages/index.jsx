@@ -5,7 +5,7 @@ import Register from "./Register";
 import Error from "./Error";
 import Confirmation from "./Confirmation";
 import ProtectedUser from "./ProtectedRoutes";
-
+import Products from "./Products";
 
 export  {
     SharedLayout,
@@ -14,5 +14,6 @@ export  {
     Register,
     Error,
     Confirmation,
-    ProtectedUser
+    ProtectedUser,
+    Products
 }

@@ -9,6 +9,7 @@ const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
 const name = localStorage.getItem('name')
 const email = localStorage.getItem('email')
+const role = localStorage.getItem('role')
 
 const initialState = {
     isLoading  :false,
@@ -17,9 +18,9 @@ const initialState = {
     alertType : '',
     userr : user || '',
     name : name || '',
+    role : role || '',
     email : email || '',
     token : token ||  '',
-    userLocation : ''
 }
 
 const AppContext = React.createContext()
@@ -50,8 +51,8 @@ const AppProvider = ({children}) => {
             localStorage.setItem('token' , data.data.token)
             localStorage.setItem('user' , JSON.stringify(data.data.user))
             localStorage.setItem('name' , data.data.user.name)  
-            localStorage.setItem('email' , data.data.user.email)      
-    
+            localStorage.setItem('email' , data.data.user.email)     
+            localStorage.setItem('role' , data.data.user.role)
             toast.success(data.data.message)
         },
         onError : (error) => {
@@ -65,12 +66,13 @@ const AppProvider = ({children}) => {
         mutationFn : (value) => axios.post('http://localhost:3050/api/v1/auth/login' , value),
         onSuccess : (data) => {
             queryClient.invalidateQueries({queryKey : ['tasks']})
-            console.log(data)
             dispatch({type : 'USER_LOGGED_IN' , payload : {data}})
             localStorage.setItem('token' , data.data.token)
             localStorage.setItem('user' , JSON.stringify(data.data.isExist))
             localStorage.setItem('name' , data.data.isExist.name)
             localStorage.setItem('email' , data.data.isExist.email)
+            localStorage.setItem('role' , data.data.isExist.role)
+
             toast.success(data.data.message)
         },
         onError : (error) => {

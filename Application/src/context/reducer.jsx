@@ -26,6 +26,7 @@ export const reducer = (state,action) => {
             token : action.payload.data.data.token,
             name : action.payload.data.data.isExist.name,
             email : action.payload.data.data.isExist.email,
+            role : action.payload.data.data.isExist.role
             // showAlert : true,
             // alertText : 'user created!'
         }
@@ -37,7 +38,8 @@ export const reducer = (state,action) => {
             token : action.payload.data.data.token,
             userr : action.payload.data.data.user,
             name : action.payload.data.data.user.name,
-            email  : action.payload.data.data.user.email
+            email  : action.payload.data.data.user.email,
+            role : action.payload.data.data.user.role
         }
     }
 
@@ -50,6 +52,7 @@ export const reducer = (state,action) => {
             name : '',
             email : '',
             token : '',
+            role : ''
         }
     }
 
