@@ -28,6 +28,14 @@ export const reducer = (state,action) => {
             alertText : 'user created!'
         }
     }
+    
+    if(action.type === 'USER_REGISTER') {
+        return {
+            ...state,
+            userr : action.payload.data.data.user,
+            token : action.payload.data.data.token
+        }
+    }
 
     throw new Error('there is no reducer ')
 }

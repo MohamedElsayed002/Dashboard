@@ -1,11 +1,12 @@
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import {NavLink} from 'react-router-dom'
+import {NavLink , useNavigate} from 'react-router-dom'
 import { useAppContext } from '../context/context'
-import {useState} from 'react'
+import {useState , useEffect} from 'react'
 const Login = () => {
 
-    const {showAlert , alertText,LoginUser,loginLoading , alertType} = useAppContext()
+    const {userr,alertText,LoginUser,loginLoading} = useAppContext()
+    const navigate = useNavigate()
     const [user,setUser] = useState({
         email : '',
         password : ''
@@ -17,10 +18,17 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // console.log(user)
-        showAlert()
         LoginUser(user)
     }
+
+
+    useEffect(() => {
+        if(userr) {
+            setTimeout(() => {
+                navigate('/')
+            },2000)
+        }
+    },[userr,navigate])
 
     return (
         <div className="container w-50 my-5" style={{position : 'absolute', top : '10%', left : '25%'}}>
