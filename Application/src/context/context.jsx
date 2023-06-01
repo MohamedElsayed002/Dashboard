@@ -36,18 +36,6 @@ const AppProvider = ({children}) => {
         dispatch({type : 'CLEAR_ALERT'})
     }
 
-
-    const addUserToLocalStorage = ({token}) => {
-        // localStorage.setItem('user' , JSON.stringify(user))
-        localStorage.setItem('token', token)
-    }
-
-    const removeUserFromLocalStorage = ({user,token}) => {
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
-    }
-
-
     const queryClient = useQueryClient()
 
     // Register 
@@ -55,7 +43,9 @@ const AppProvider = ({children}) => {
         mutationFn : (value) => axios.post('http://localhost:3050/api/v1/auth/register' , value),
         onSuccess : (data) => {
             queryClient.invalidateQueries({queryKey : ['tasks']})
-            console.log(data)
+            dispatch({type : 'USER_REGISTER' , payload : {data}})
+            localStorage.setItem('token' , data.data.token)
+            localStorage.setItem('user' , JSON.stringify(data.data.user))      
             toast.success(data.data.message)
         },
         onError : (error) => {

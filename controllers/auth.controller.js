@@ -24,7 +24,7 @@ const Login = async (req,res) => {
         throw new Error('please all fields must be provided')
     }
 
-    let isExist = await userModel.findOne({email  : email})
+    let isExist = await userModel.findOne({email  : email}).select('+password')
     if(!isExist) {
         throw new Error('user not found')
     }
@@ -35,6 +35,7 @@ const Login = async (req,res) => {
     }
 
     let token = isExist.CreateJWT()
+    isExist.password = undefined
     res.json({message : "logged in successfully" , token , isExist})
 
 }
