@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Error from "./Error";
 import Confirmation from "./Confirmation";
+import ProtectedUser from "./ProtectedRoutes";
 
 
 export  {
@@ -12,5 +13,6 @@ export  {
     Login,
     Register,
     Error,
-    Confirmation
+    Confirmation,
+    ProtectedUser
 }

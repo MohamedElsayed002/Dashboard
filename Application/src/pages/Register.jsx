@@ -14,7 +14,6 @@ const Register = () => {
     })
 
     const {userr ,registerUser , isLoading} = useAppContext()
-    console.log(userr)
 
 
     const handleChange = (e) => {

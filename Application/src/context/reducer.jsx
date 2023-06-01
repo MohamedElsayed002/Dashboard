@@ -24,16 +24,32 @@ export const reducer = (state,action) => {
         return {...state,
             userr : action.payload.data.data.isExist,
             token : action.payload.data.data.token,
-            showAlert : true,
-            alertText : 'user created!'
+            name : action.payload.data.data.isExist.name,
+            email : action.payload.data.data.isExist.email,
+            // showAlert : true,
+            // alertText : 'user created!'
         }
     }
     
     if(action.type === 'USER_REGISTER') {
         return {
             ...state,
+            token : action.payload.data.data.token,
             userr : action.payload.data.data.user,
-            token : action.payload.data.data.token
+            name : action.payload.data.data.user.name,
+            email  : action.payload.data.data.user.email
+        }
+    }
+
+    if(action.type === "CLEAR_ALL_DATA") {
+        return {
+            ...state,
+            showAlert : false,
+            alertText : '',
+            userr : '',
+            name : '',
+            email : '',
+            token : '',
         }
     }
 

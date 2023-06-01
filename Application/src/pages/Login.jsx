@@ -70,7 +70,6 @@ const Login = () => {
                     {loginLoading ? 'loading...' : 'submit'}
                 </Button> Need an account? <NavLink to="/register">Register</NavLink>
             </Form>
-            <NavLink to="/">dd</NavLink>
         </div>
     )
 }
