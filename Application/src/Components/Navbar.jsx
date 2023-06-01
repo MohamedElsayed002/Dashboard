@@ -7,7 +7,7 @@ import { useAppContext } from "../context/context";
 import {NavLink} from "react-router-dom";
 const NavbarComp = () => {
 
-    const {name , LogoutUser} = useAppContext()
+    const {name , LogoutUser , role} = useAppContext()
 
     return (
         <Navbar   variant="dark" bg="primary" expand="lg">
@@ -22,11 +22,15 @@ const NavbarComp = () => {
               menuVariant="dark"
               className="mx-5"
             >
-              <NavDropdown.Item to="/login" as={NavLink}>update user</NavDropdown.Item>
-              <NavDropdown.Item to="/admin" as={NavLink}>
-                admin
-              </NavDropdown.Item>
-              <NavDropdown.Item>Something</NavDropdown.Item>
+              <NavDropdown.Item to="/updateUser" as={NavLink}>update user</NavDropdown.Item>
+              {
+                role === 'admin' && (
+                  <NavDropdown.Item to="/admin" as={NavLink}>
+                  admin
+                </NavDropdown.Item>
+                )
+              }
+              <NavDropdown.Item to="/changePassword" as={NavLink}>Change password</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4" onClick={() => LogoutUser()}>
                 Logout

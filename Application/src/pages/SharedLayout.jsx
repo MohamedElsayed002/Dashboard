@@ -13,8 +13,6 @@ const SharedLayout = () => {
         <>  
             <Navbar/>
             <h1>Shared Layout</h1>
-            <h2>name {userr.name}</h2>
-            <h4>{token}</h4>
             <Outlet/>
         </>
     )
