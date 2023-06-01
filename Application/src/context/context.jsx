@@ -23,12 +23,25 @@ const initialState = {
     token : token ||  '',
 }
 
+
+
 const AppContext = React.createContext()
 
 const AppProvider = ({children}) => {
 
+
+
     const [state,dispatch] = useReducer(reducer,initialState)
+    const [users,setUsers] = useState([])
     const navigate = useNavigate()
+
+    const authFetch = axios.create({
+        baseURL : '',
+        headers : {
+            Authorization : `${state.token}`
+        }
+    })
+
     const showAlert = () => {
         dispatch({type  : 'SHOW_ALERT'})
         setTimeout(() => {
@@ -80,6 +93,49 @@ const AppProvider = ({children}) => {
         }
     }) 
 
+    const {mutate : UpdateUser , isLoading : loadingUpdate} = useMutation({
+        mutationFn : (value) => authFetch.patch('http://localhost:3050/api/v1/auth/updateUser' , value),
+        onSuccess : (data) => {
+            queryClient.invalidateQueries({queryKey : ['tasks']})
+            localStorage.setItem('token' , data.data.token)
+            localStorage.setItem('user' , JSON.stringify(data.data.user))
+            localStorage.setItem('name' , data.data.user.name)  
+            localStorage.setItem('email' , data.data.user.email)     
+            localStorage.setItem('role' , data.data.user.role)
+            toast.success(data.data.message)
+        },
+        onError : (error) => {
+            toast.error(error.response.data.msg)
+        }
+    })
+
+    const {mutate : changePassword , isLoading : loadingChangePassword} = useMutation({
+        mutationFn : (value) => authFetch.patch('http://localhost:3050/api/v1/auth/changePassword' , value),
+        onSuccess : (data) => {
+            queryClient.invalidateQueries({queryKey : ['tasks']})
+            localStorage.setItem('token' , data.data.token)
+            localStorage.setItem('user' , JSON.stringify(data.data.user))
+            localStorage.setItem('name' , data.data.user.name)  
+            localStorage.setItem('email' , data.data.user.email)     
+            localStorage.setItem('role' , data.data.user.role)
+            toast.success(data.data.message)
+        },
+        onError : (error) => {
+            toast.error(error.response.data.msg)
+        }
+    })
+
+    const {mutate : fetchUsers , isLoading : LoadingData} = useMutation({
+        mutationFn :async  () => {
+            let data = await authFetch('http://localhost:3050/api/v1/auth/allUsers')
+            setUsers(data.data.user)
+        },
+
+        onError : (error) => {
+            toast.error(error.response.data.msg)
+        }
+    })
+
 
     const LogoutUser = () => {
         dispatch({type : 'CLEAR_ALL_DATA'})
@@ -100,7 +156,14 @@ const AppProvider = ({children}) => {
             LoginUser,
             loginLoading,
             LogoutUser,
-            clearAlert
+            clearAlert,
+            UpdateUser,
+            loadingUpdate,
+            changePassword,
+            loadingChangePassword,
+            fetchUsers,
+            users,
+            LoadingData
         }}>
             {children}
         </AppContext.Provider>

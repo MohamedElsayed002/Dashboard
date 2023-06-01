@@ -12,7 +12,7 @@ const NavbarComp = () => {
     return (
         <Navbar   variant="dark" bg="primary" expand="lg">
       <Container>
-        <Navbar.Brand to="/"  as={NavLink}>SHOPIFY</Navbar.Brand>
+        <Navbar.Brand to="/"  as={NavLink}>LOGO</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-dark-example" />
         <Navbar.Collapse id="navbar-dark-example">
           <Nav className="ms-auto">
@@ -22,17 +22,17 @@ const NavbarComp = () => {
               menuVariant="dark"
               className="mx-5"
             >
-              <NavDropdown.Item to="/updateUser" as={NavLink}>update user</NavDropdown.Item>
-              {
+                            {
                 role === 'admin' && (
                   <NavDropdown.Item to="/admin" as={NavLink}>
-                  admin
+                  Admin
                 </NavDropdown.Item>
                 )
               }
+              <NavDropdown.Item to="/updateUser" as={NavLink}>Update User</NavDropdown.Item>
               <NavDropdown.Item to="/changePassword" as={NavLink}>Change password</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4" onClick={() => LogoutUser()}>
+              <NavDropdown.Item  onClick={() => LogoutUser()}>
                 Logout
               </NavDropdown.Item>
             </NavDropdown>

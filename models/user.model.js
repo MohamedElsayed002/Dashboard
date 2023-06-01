@@ -36,13 +36,14 @@ const userSchema =  mongoose.Schema({
 })
 
 userSchema.pre('save' , async function () {
+    if(!this.isModified('password')) return
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password,salt)
 })
 
 
 userSchema.methods.CreateJWT = function  () {
-    return jwt.sign({userId : this._id , name : this.name , email : this.email} , process.env.JWT_SECRET)
+    return jwt.sign({userId : this._id , name : this.name , email : this.email , role : this.role} , 'Mohamed')
 }
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
