@@ -1,8 +1,8 @@
 import Logo from "../Components/Logo"
 import Image2 from '../assets/images/undraw_scrum_board_re_wk7v.svg'
 import { NavLink } from "react-router-dom"
-import styled from 'styled-components'
-
+import Lottie from 'lottie-react'
+import animationData from '../assets/144103-e-v-e.json'
 const LandingPage = () => {
     return (
         <>
@@ -23,7 +23,8 @@ const LandingPage = () => {
                         </button>
                     </div>
                     <div className="col d-none d-md-block d-lg-block">
-                        <img className="w-100 my-3" src={Image2} />
+                        {/* <img className="w-100 my-3" src={Image2} /> */}
+                        <Lottie animationData={animationData} />
                     </div>
                 </div>
             </div>
