@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import {NavLink , useNavigate} from 'react-router-dom'
 import {useState , useEffect} from 'react'
 import { useAppContext } from '../context/context'
+import Loading from '../Components/Loading'
 const Register = () => {
 
 
@@ -33,6 +34,10 @@ const Register = () => {
             },2000)
         }
     },[userr,navigate])
+
+    if(isLoading) {
+        return <Loading/>
+    }
 
     return (
         <div className="container w-50 my-5" style={{position : 'absolute', top : '10%', left : '25%'}}>

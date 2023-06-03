@@ -1,9 +1,14 @@
 
-
+import CarouselComp from "../Components/Carousel"
 
 const Products = () => {
     return (
-        <h1>Products</h1>
+        <>
+        <CarouselComp/>
+
+
+            <h1 className="my-5 text-center">Mohamed</h1>
+        </>
     )
 }
 

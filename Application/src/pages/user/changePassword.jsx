@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useAppContext } from '../../context/context'
 import {useState} from 'react'
+import Loading from '../../Components/Loading'
 
 
 const ChangePassword = () => {
@@ -25,6 +26,10 @@ const ChangePassword = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         changePassword(data)
+    }
+
+    if(loadingChangePassword) {
+        return <Loading/>
     }
 
     return (

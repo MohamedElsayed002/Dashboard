@@ -83,14 +83,59 @@ const changePassword = async (req,res) => {
 }
 
 const getAllUsers = async (req,res) => {
-    let user = await userModel.find({}).select('-password')
+    const {search} = req.query
+    
+    const queryObject = {
+
+    }
+
+    if(search) {
+        queryObject.name = {$regex : search , $options : 'i'}
+    }
+
+    let user = await userModel.find(queryObject).select('-password')
     res.status(201).json({user})
 }
+
+const getSingleUser = async (req,res) => {
+    const {id} = req.params
+    let user = await userModel.find({_id : id })
+    if(!user) {
+        throw new Error(`no user found with id ${id}`)
+    }
+    res.status(201).json({message : "success" , user})
+}
+
+const deleteUser = async (req,res) => {
+    const {id} = req.params
+    let user = await userModel.findByIdAndDelete({_id : id})
+    if(!user) {
+        throw new Error('user not founddddddddddddd')
+    }
+
+
+    res.status(201).json({message : "user deleted successfully"})
+}
+
+
+// const deleteProduct = async (req,res) => {
+//     const {id : productId} = req.params
+//     const product = await Product.findOne({_id : productId})
+//     if(!product) {
+//         throw new Error("product not found")
+//     }
+
+//     await product.delete()
+
+//     res.status(201).json({message : "product deleted successfully"})
+// }
 
 export {
     Register,
     Login,
     updateUser,
     changePassword,
-    getAllUsers
+    getAllUsers,
+    getSingleUser,
+    deleteUser
 }

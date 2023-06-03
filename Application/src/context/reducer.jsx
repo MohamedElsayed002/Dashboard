@@ -27,8 +27,6 @@ export const reducer = (state,action) => {
             name : action.payload.data.data.isExist.name,
             email : action.payload.data.data.isExist.email,
             role : action.payload.data.data.isExist.role
-            // showAlert : true,
-            // alertText : 'user created!'
         }
     }
     
@@ -40,6 +38,21 @@ export const reducer = (state,action) => {
             name : action.payload.data.data.user.name,
             email  : action.payload.data.data.user.email,
             role : action.payload.data.data.user.role
+        }
+    }
+
+    if(action.type === 'UPDATE_USER') {
+        return {
+            ...state,
+            name : action.payload.data.data.user.name,
+            token : action.payload.data.data.token,
+        }
+    }
+
+    if(action.type === 'CHANGE_PASSWORD') {
+        return {
+            ...state,
+            token : action.payload.data.data.token
         }
     }
 

@@ -33,6 +33,7 @@ const AppProvider = ({children}) => {
 
     const [state,dispatch] = useReducer(reducer,initialState)
     const [users,setUsers] = useState([])
+    const [singleUsers,setSingleUser] = useState([])
     const navigate = useNavigate()
 
     const authFetch = axios.create({
@@ -97,6 +98,7 @@ const AppProvider = ({children}) => {
         mutationFn : (value) => authFetch.patch('http://localhost:3050/api/v1/auth/updateUser' , value),
         onSuccess : (data) => {
             queryClient.invalidateQueries({queryKey : ['tasks']})
+            dispatch({type : 'UPDATE_USER' , payload : {data}})
             localStorage.setItem('token' , data.data.token)
             localStorage.setItem('user' , JSON.stringify(data.data.user))
             localStorage.setItem('name' , data.data.user.name)  
@@ -113,6 +115,7 @@ const AppProvider = ({children}) => {
         mutationFn : (value) => authFetch.patch('http://localhost:3050/api/v1/auth/changePassword' , value),
         onSuccess : (data) => {
             queryClient.invalidateQueries({queryKey : ['tasks']})
+            dispatch({type : 'CHANGE_PASSWORD' , payload : {data}})
             localStorage.setItem('token' , data.data.token)
             localStorage.setItem('user' , JSON.stringify(data.data.user))
             localStorage.setItem('name' , data.data.user.name)  
@@ -126,13 +129,28 @@ const AppProvider = ({children}) => {
     })
 
     const {mutate : fetchUsers , isLoading : LoadingData} = useMutation({
-        mutationFn :async  () => {
-            let data = await authFetch('http://localhost:3050/api/v1/auth/allUsers')
+        mutationFn :async  (search) => {
+            let data = await authFetch(`http://localhost:3050/api/v1/auth/allUsers?search=${search}`)
             setUsers(data.data.user)
         },
 
         onError : (error) => {
             toast.error(error.response.data.msg)
+        }
+    })
+
+    const {mutate : getSingleUser , isLoading : singleUserLoading} = useMutation({
+        mutationFn : async (id) => {
+            let data = await authFetch(`http://localhost:3050/api/v1/auth/allUsers/${id}`)
+            setSingleUser(data.data.user)
+        }
+    })
+
+    const {mutate : deleteUser} = useMutation({
+        mutationFn : async (id) => {
+            console.log(id)
+            let data = await authFetch.delete(`http://localhost:3050/api/v1/auth/deleteUser/${id}`)
+            toast.success(data.data.message)
         }
     })
 
@@ -163,7 +181,11 @@ const AppProvider = ({children}) => {
             loadingChangePassword,
             fetchUsers,
             users,
-            LoadingData
+            LoadingData,
+            getSingleUser,
+            singleUsers,
+            singleUserLoading,
+            deleteUser
         }}>
             {children}
         </AppContext.Provider>

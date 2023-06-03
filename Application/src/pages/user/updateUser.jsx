@@ -2,6 +2,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useAppContext } from '../../context/context'
 import {useState} from 'react'
+import Loading from '../../Components/Loading'
 
 
 const UpdateUser = () => {
@@ -21,6 +22,10 @@ const UpdateUser = () => {
         e.preventDefault()
         console.log(data)
         UpdateUser(data)
+    }
+    
+    if(loadingUpdate) {
+        return <Loading/>
     }
 
     return (
