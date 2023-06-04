@@ -10,6 +10,7 @@ const user = localStorage.getItem('user')
 const name = localStorage.getItem('name')
 const email = localStorage.getItem('email')
 const role = localStorage.getItem('role')
+const profilePic = localStorage.getItem('profilePic')
 
 const initialState = {
     isLoading  :false,
@@ -21,6 +22,7 @@ const initialState = {
     role : role || '',
     email : email || '',
     token : token ||  '',
+    profilePic : profilePic || ''
 }
 
 
@@ -33,7 +35,13 @@ const AppProvider = ({children}) => {
 
     const [state,dispatch] = useReducer(reducer,initialState)
     const [users,setUsers] = useState([])
-    const [singleUsers,setSingleUser] = useState([])
+    const [singleUsers,setSingleUser] = useState({
+        name : '',
+        email : '',
+        role : '',
+        image : '',
+        id : '',
+    })
     const navigate = useNavigate()
 
     const authFetch = axios.create({
@@ -62,6 +70,7 @@ const AppProvider = ({children}) => {
         onSuccess : (data) => {
             queryClient.invalidateQueries({queryKey : ['tasks']})
             dispatch({type : 'USER_REGISTER' , payload : {data}})
+            console.log(data)
             localStorage.setItem('token' , data.data.token)
             localStorage.setItem('user' , JSON.stringify(data.data.user))
             localStorage.setItem('name' , data.data.user.name)  
@@ -80,6 +89,7 @@ const AppProvider = ({children}) => {
         mutationFn : (value) => axios.post('http://localhost:3050/api/v1/auth/login' , value),
         onSuccess : (data) => {
             queryClient.invalidateQueries({queryKey : ['tasks']})
+            console.log(data)
             dispatch({type : 'USER_LOGGED_IN' , payload : {data}})
             localStorage.setItem('token' , data.data.token)
             localStorage.setItem('user' , JSON.stringify(data.data.isExist))
@@ -142,7 +152,14 @@ const AppProvider = ({children}) => {
     const {mutate : getSingleUser , isLoading : singleUserLoading} = useMutation({
         mutationFn : async (id) => {
             let data = await authFetch(`http://localhost:3050/api/v1/auth/allUsers/${id}`)
-            setSingleUser(data.data.user)
+            setSingleUser({
+                ...singleUsers,
+                name : data.data.user[0].name,
+                email :data.data.user[0].email,
+                image : data.data.user[0].image,
+                role : data.data.user[0].role,
+                id : data.data.user[0]._id
+            })
         }
     })
 

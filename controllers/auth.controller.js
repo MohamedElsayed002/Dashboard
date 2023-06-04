@@ -99,7 +99,7 @@ const getAllUsers = async (req,res) => {
 
 const getSingleUser = async (req,res) => {
     const {id} = req.params
-    let user = await userModel.find({_id : id }).populate('photo')
+    let user = await userModel.find({_id : id })
     if(!user) {
         throw new Error(`no user found with id ${id}`)
     }
