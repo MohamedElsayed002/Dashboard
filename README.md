@@ -10,5 +10,5 @@ client side <br/>
 cd Application && npm run dev 
  
  
- Cloudnairy
+ cloudinary
 ---
