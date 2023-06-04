@@ -1,13 +1,12 @@
 
 import CarouselComp from "../Components/Carousel"
+import Languages from "../Components/Languages"
 
 const Products = () => {
     return (
         <>
         <CarouselComp/>
-
-
-            <h1 className="my-5 text-center">Mohamed</h1>
+        <Languages/>
         </>
     )
 }

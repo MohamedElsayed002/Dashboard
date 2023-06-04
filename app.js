@@ -15,6 +15,9 @@ import errorHandlerMiddleware from './middleware/error-handler.js'
 // Routes 
 import authRouter from './route/auth.route.js'
 
+import { sendEmail } from './utils/sendEmail.js'
+import photosRoute from './route/photos.route.js'
+
 
 
 
@@ -23,12 +26,20 @@ const app = express()
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors())
+app.use(express.static('./uploads/'))
 app.use('/api/v1/auth' , authRouter )
+app.use(photosRoute)
 
 app.get('/' , (req,res) => {
     res.send('<h1>Mohamed Elsayed</h1>')
 })
 
+app.get('/sendEmail' , (req,res) => {
+    res.send('<h1>sending email <a href="/emailSend">send email</a></a></h1>')
+    sendEmail()
+})
+
+app.get('/emailSend', sendEmail)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
