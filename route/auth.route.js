@@ -7,8 +7,10 @@ import { Register,
         changePassword,
         getAllUsers,
         getSingleUser,
-        deleteUser } from '../controllers/auth.controller.js'
+        deleteUser,
+        addPhoto } from '../controllers/auth.controller.js'
 import { auth , authorizePermissions } from '../middleware/auth.js'
+import {fileUpload} from '../utils/uploadfiles.js'
 
 const authRouter = express.Router()
 
@@ -20,6 +22,7 @@ authRouter.patch('/changePassword' , auth , changePassword)
 authRouter.get('/allUsers' , [auth , authorizePermissions('admin')] , getAllUsers)
 authRouter.get('/allUsers/:id' , [auth , authorizePermissions('admin')] , getSingleUser)
 authRouter.delete('/deleteUser/:id' , [auth , authorizePermissions('admin')] ,deleteUser)
+authRouter.post('/photo' ,  auth , fileUpload('path') ,addPhoto)
 
 
 export default authRouter

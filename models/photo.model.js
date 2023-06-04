@@ -9,7 +9,8 @@ const photoSchema =  mongoose.Schema({
     createdBy : {
         type : mongoose.Types.ObjectId,
         ref : 'User'
-    }
+    },
+    image : String
 },
 {
     timestamps : true

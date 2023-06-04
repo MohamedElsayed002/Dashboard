@@ -1,5 +1,5 @@
 import {userModel} from '../models/user.model.js'
-
+import cloudinary from 'cloudinary'
 
 const Register = async (req,res) => {
     const {name,email,password,role} = req.body
@@ -99,7 +99,7 @@ const getAllUsers = async (req,res) => {
 
 const getSingleUser = async (req,res) => {
     const {id} = req.params
-    let user = await userModel.find({_id : id })
+    let user = await userModel.find({_id : id }).populate('photo')
     if(!user) {
         throw new Error(`no user found with id ${id}`)
     }
@@ -118,17 +118,19 @@ const deleteUser = async (req,res) => {
 }
 
 
-// const deleteProduct = async (req,res) => {
-//     const {id : productId} = req.params
-//     const product = await Product.findOne({_id : productId})
-//     if(!product) {
-//         throw new Error("product not found")
-//     }
+const addPhoto = async (req,res) => {
+    const result = await  cloudinary.v2.uploader.upload(
+        req.file.path,
+        {
+            use_filename  :true,
+            folder : 'imagesProject'
+        }
+    )
 
-//     await product.delete()
+    const photo = await userModel.findByIdAndUpdate(req.user.userId , {  path : req.file.filename , image : result.url} , {new :true})
+    res.status(201).json({message : "photo uploaded successfully" , photo})
 
-//     res.status(201).json({message : "product deleted successfully"})
-// }
+}
 
 export {
     Register,
@@ -137,5 +139,6 @@ export {
     changePassword,
     getAllUsers,
     getSingleUser,
-    deleteUser
+    deleteUser,
+    addPhoto
 }

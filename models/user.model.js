@@ -1,6 +1,6 @@
 
 
-import mongoose from 'mongoose'
+import mongoose, { Mongoose } from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -12,7 +12,6 @@ const userSchema =  mongoose.Schema({
         minLength : [3,'too short'],
         maxLength : [70  , 'too long'],
         trim : true,
-        required : true,
     },
     email : {
         type : String,
@@ -21,17 +20,23 @@ const userSchema =  mongoose.Schema({
             message : "please enter a valid email address"
         },
         unique : true,
-        required : true
     },
     password : {
         type : String,
         minLength : [7,'too short password'],
-        required : [true , 'please provide password :) ']
     },
     role : {
         type : String,
         enum : ['admin' , 'user'],
         default : 'user'
+    },
+    path : {
+        type : String,
+        default : ''
+    },
+    image : {
+        type : String,
+        default : ''
     }
 })
 
