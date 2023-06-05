@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom"
 const ProtectedUser = ({children}) => {
 
     const {userr} = useAppContext()
+    
     if(!userr) {
         return <Navigate to="/landing" />
     }

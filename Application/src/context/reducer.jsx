@@ -65,7 +65,8 @@ export const reducer = (state,action) => {
             name : '',
             email : '',
             token : '',
-            role : ''
+            role : '',
+            profilePic : ''
         }
     }
 

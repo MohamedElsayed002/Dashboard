@@ -3,37 +3,67 @@ import Button from 'react-bootstrap/Button'
 import { useAppContext } from '../../context/context'
 import {useState} from 'react'
 import Loading from '../../Components/Loading'
+import DefaultImage from '../../assets/images/blank-profile-picture-973460_1280.webp'
 
 
 const UpdateUser = () => {
 
 
-    const {email , role , name , loadingUpdate , UpdateUser} = useAppContext()
+    const {email , role , name , loadingUpdate , UpdateUser , profilePic , updatePhoto} = useAppContext()
 
     const [data,setData] = useState({
         name : name
+    })
+
+    const [path,setPath] = useState({
+        path : ''
     })
 
     const handleChange = (e) => {
         setData({...data , [e.target.name] : e.target.value})
     }
 
+    const handlePhoto = (e) => {
+        setPath({...path , [e.target.name] : e.target.value})
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(data)
         UpdateUser(data)
+    }
+
+    const handleImageSubmit = (e) => {
+        e.preventDefault()
+        updatePhoto(path)
     }
     
     if(loadingUpdate) {
         return <Loading/>
     }
 
+
+    let photo = profilePic || DefaultImage
+
+    
+
     return (
         <>  
             <h1 style={{marginTop : '20px'}} className="text-center">User Info</h1>
             <div style={{minWidth  : '300px'}}  className="container p-5 mx-auto  w-50" >
+            <img   style={{borderRadius : '50%' , height : '200px' , width  :'200px' , objectFit : 'cover'}}  src={photo} />
+            <Form.Group className="mb-3">
+                <h5>Upload Image</h5>
+                <Form.Control
+                            type="file"
+                            name="path"
+                            value={path.path}
+                            onChange={handlePhoto}
+                />
+                <Button onClick={handleImageSubmit} className="mt-3 w-100">Save Image</Button>
+                <Form.Text ClassName="text-muted">not working yet</Form.Text>
+            </Form.Group>
+
                 <Form.Group className="mb-3">
-                    {/* <Form.Label>email</Form.Label> */}
                     <h5>Email</h5>
                     <Form.Control
                         type="text"

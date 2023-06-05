@@ -1,6 +1,6 @@
 import {userModel} from '../models/user.model.js'
 import cloudinary from 'cloudinary'
-
+import {sendEmail} from '../utils/sendEmail.js'
 const Register = async (req,res) => {
     const {name,email,password,role} = req.body
     if(!name || !email || !password) {
@@ -13,8 +13,9 @@ const Register = async (req,res) => {
     }
     let user = await userModel.create({email,name,password,role})
 
+    sendEmail(email)
     let token = user.CreateJWT()
-    res.status(201).json({message : "user created successfully " , user , token})
+    res.status(201).json({message : "user created successfully & check your email " , user , token})
 }
 
 

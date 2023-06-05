@@ -10,7 +10,8 @@ const user = localStorage.getItem('user')
 const name = localStorage.getItem('name')
 const email = localStorage.getItem('email')
 const role = localStorage.getItem('role')
-const profilePic = localStorage.getItem('profilePic')
+const image = localStorage.getItem('image')
+
 
 const initialState = {
     isLoading  :false,
@@ -22,7 +23,7 @@ const initialState = {
     role : role || '',
     email : email || '',
     token : token ||  '',
-    profilePic : profilePic || ''
+    profilePic : image || ''
 }
 
 
@@ -96,7 +97,7 @@ const AppProvider = ({children}) => {
             localStorage.setItem('name' , data.data.isExist.name)
             localStorage.setItem('email' , data.data.isExist.email)
             localStorage.setItem('role' , data.data.isExist.role)
-
+            localStorage.setItem('image' , data.data.isExist.image)
             toast.success(data.data.message)
         },
         onError : (error) => {
@@ -171,6 +172,13 @@ const AppProvider = ({children}) => {
         }
     })
 
+    const {mutate : updatePhoto} = useMutation({
+        mutationFn : async (value) => {
+            let data = await authFetch.post('http://localhost:3050/api/v1/auth/photo' , value)
+            console.log(data)
+        }
+    })
+
 
     const LogoutUser = () => {
         dispatch({type : 'CLEAR_ALL_DATA'})
@@ -178,9 +186,15 @@ const AppProvider = ({children}) => {
         localStorage.removeItem('user')
         localStorage.removeItem('name')
         localStorage.removeItem('email')
-        setTimeout(() => {
-            navigate('/landing')
-        },3000)
+        localStorage.removeItem('role')
+        localStorage.removeItem('image')
+        setSingleUser({
+            name : '',
+            email : '',
+            role : '',
+            image : '',
+            id : ''
+        })
     }
     return (
         <AppContext.Provider value={{
@@ -202,7 +216,8 @@ const AppProvider = ({children}) => {
             getSingleUser,
             singleUsers,
             singleUserLoading,
-            deleteUser
+            deleteUser,
+            updatePhoto
         }}>
             {children}
         </AppContext.Provider>

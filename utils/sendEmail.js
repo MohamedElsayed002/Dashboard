@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 
 
-export const sendEmail = async (req,res) => {
+export const sendEmail = async (email) => {
 
 
 
@@ -14,8 +14,8 @@ export const sendEmail = async (req,res) => {
     });
 
     let info = await transporter.sendMail({
-        from: '"Mohamed Elsayed 👻" <mohamedelsayed20258@gmail.com>', // sender address
-        to: "mohamedelsayed20258@gmail.com", // list of receivers
+        from: '"Mohamed Elsayed " <mohamedelsayed20258@gmail.com>', // sender address
+        to: email , // list of receivers
         subject: "Hello ✔", // Subject line
         text: "Hello world?", // plain text body
         html: "<b>Hello world?</b>", // html body

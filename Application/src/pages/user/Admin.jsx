@@ -18,7 +18,7 @@ const Admin = () => {
     
     useEffect(() => {
         fetchUsers(search)
-    },[search,users])
+    },[search])
 
     if(role === 'user') {
         return  <Navigate to="/" />
