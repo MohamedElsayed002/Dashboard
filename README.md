@@ -11,4 +11,5 @@ cd Application && npm run dev
  
  
  cloudinary
+ nodemailer
 ---
