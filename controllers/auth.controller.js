@@ -1,6 +1,9 @@
 import {userModel} from '../models/user.model.js'
 import cloudinary from 'cloudinary'
 import {sendEmail} from '../utils/sendEmail.js'
+import crypto from 'crypto'
+
+
 const Register = async (req,res) => {
     const {name,email,password,role} = req.body
     if(!name || !email || !password) {
@@ -11,11 +14,48 @@ const Register = async (req,res) => {
     if(checkingEmail) {
         throw new Error('please choose unique email')
     }
-    let user = await userModel.create({email,name,password,role})
 
-    sendEmail(email)
-    let token = user.CreateJWT()
-    res.status(201).json({message : "user created successfully & check your email " , user , token})
+    const verificationToken  = crypto.randomBytes(40).toString('hex')
+
+    const user = await userModel.create({
+        name,
+        email,
+        password,
+        verificationToken
+    })
+
+    const origin = `http://localhost:5173/verify-email?token=${verificationToken}&email=${email}`
+
+    await sendEmail(email , name , `hello ${name} please check your email to verify your account <br/> 
+        code  ${verificationToken}  <br/>
+        <a href=${origin}>Here</a> <br/>
+    `)
+
+    res.status(201).json({ message : "success! please check your email to verify your account" , user})
+}
+
+
+const verifyEmail = async (req,res) => {
+    const {verificationToken , email} = req.body
+    const user = await userModel.findOne({email})
+
+    if(!user) {
+        throw new Error('verification failed!')
+    }
+
+    if(user.verificationToken !==  verificationToken) {
+        throw new Error('verification failed')
+    }
+
+
+    user.isVerified = true
+    user.verified = Date.now()
+    user.verificationToken = ''
+
+    await user.save()
+
+    res.status(201).json({message : 'email verified' })
+
 }
 
 
@@ -33,6 +73,10 @@ const Login = async (req,res) => {
     const isMatching =  await isExist.comparePassword(password)
     if(!isMatching) {
         throw new Error('password mismatch')
+    }
+
+    if(!isExist.isVerified) {
+        throw new Error('please verify your account first')
     }
 
     let token = isExist.CreateJWT()
@@ -141,5 +185,6 @@ export {
     getAllUsers,
     getSingleUser,
     deleteUser,
-    addPhoto
+    addPhoto,
+    verifyEmail
 }

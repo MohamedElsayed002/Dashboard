@@ -38,6 +38,12 @@ const userSchema =  mongoose.Schema({
         type : String,
         default : ''
     },
+    verificationToken : String,
+    isVerified : {
+        type : Boolean,
+        default : false,
+    },
+    verified : Date,
 })
 
 userSchema.pre('save' , async function () {

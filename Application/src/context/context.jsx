@@ -69,18 +69,35 @@ const AppProvider = ({children}) => {
     const {mutate : registerUser  , isLoading } = useMutation({
         mutationFn : (value) => axios.post('http://localhost:3050/api/v1/auth/register' , value),
         onSuccess : (data) => {
-            queryClient.invalidateQueries({queryKey : ['tasks']})
-            dispatch({type : 'USER_REGISTER' , payload : {data}})
             console.log(data)
-            localStorage.setItem('token' , data.data.token)
-            localStorage.setItem('user' , JSON.stringify(data.data.user))
-            localStorage.setItem('name' , data.data.user.name)  
-            localStorage.setItem('email' , data.data.user.email)     
-            localStorage.setItem('role' , data.data.user.role)
-            toast.success(data.data.message)
+            // queryClient.invalidateQueries({queryKey : ['tasks']})
+            // dispatch({type : 'USER_REGISTER' , payload : {data}})
+            // console.log(data)
+            // localStorage.setItem('token' , data.data.token)
+            // localStorage.setItem('user' , JSON.stringify(data.data.user))
+            // localStorage.setItem('name' , data.data.user.name)  
+            // localStorage.setItem('email' , data.data.user.email)     
+            // localStorage.setItem('role' , data.data.user.role)
+            // toast.success(data.data.message)
         },
         onError : (error) => {
             toast.error(error.response.data.msg)
+        }
+    })
+
+    // confirm email 
+
+    const {mutate : confirmation} = useMutation({
+        mutationFn : async  (verificationToken,email) => {
+            const data = await  axios.post("localhost:3050/api/v1/auth/verify-Email",verificationToken,email)
+            console.log(data)
+            console.log(email)
+        },
+        onSuccess : (data) => {
+            console.log(data)
+        },
+        onError : (error) => {
+            console.log(error)
         }
     })
 
@@ -217,7 +234,8 @@ const AppProvider = ({children}) => {
             singleUsers,
             singleUserLoading,
             deleteUser,
-            updatePhoto
+            updatePhoto,
+            confirmation
         }}>
             {children}
         </AppContext.Provider>

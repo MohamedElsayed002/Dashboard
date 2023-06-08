@@ -20,7 +20,7 @@ const Languages = () => {
                             Some quick example text to build on the card title and make up the
                             bulk of the card's content.
                             </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Button variant="primary" href="https://www.w3schools.com/html">Go somewhere</Button>
                     </Card.Body>
                     </Card>
                     </Col>
@@ -33,7 +33,7 @@ const Languages = () => {
                             Some quick example text to build on the card title and make up the
                             bulk of the card's content.
                             </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Button variant="primary" href="https://www.w3schools.com/js/">Go somewhere</Button>
                     </Card.Body>
                     </Card>
                     </Col>
@@ -46,7 +46,7 @@ const Languages = () => {
                             Some quick example text to build on the card title and make up the
                             bulk of the card's content.
                             </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Button variant="primary" href="https://www.w3schools.com/css/">Go somewhere</Button>
                     </Card.Body>
                     </Card>
                     </Col>
@@ -61,7 +61,7 @@ const Languages = () => {
                             Some quick example text to build on the card title and make up the
                             bulk of the card's content.
                             </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Button variant="primary" href="https://react.dev/">Go somewhere</Button>
                     </Card.Body>
                     </Card>
                     </Col>
@@ -74,7 +74,7 @@ const Languages = () => {
                             Some quick example text to build on the card title and make up the
                             bulk of the card's content.
                             </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Button variant="primary" href="https://nodejs.org/en">Go somewhere</Button>
                     </Card.Body>
                     </Card>
                     </Col>
@@ -87,7 +87,7 @@ const Languages = () => {
                             Some quick example text to build on the card title and make up the
                             bulk of the card's content.
                             </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Button variant="primary" href="https://expressjs.com/">Go somewhere</Button>
                     </Card.Body>
                     </Card>
                     </Col>
