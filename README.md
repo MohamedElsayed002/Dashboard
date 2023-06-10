@@ -31,3 +31,75 @@ cd Application && npm run dev
     "nodemon": "^2.0.22",
     "validator": "^13.9.0"
  ```
+ ### to run the server
+``` js
+ import express from 'express'
+ import dotenv from 'dotenv'
+ dotenv.config()
+ 
+ const app = express()
+ 
+ app.get('/' , (req,res) => {
+  res.send('Hello')
+ })
+ 
+ const PORT = process.env.PORT || 3050
+```
+
+and you need to make your file file structure to orginize your file <br/>
+1- controllers 2-models 3-database 4-middleware 5-routes 6-utils 7-uploads 8-errors <br/>
+
+In folder errors we need to handle Errors to avoid stop of the server create file custom-api.js and if you want to make other file to handle different errors you can do as you wish <br/>
+
+```js
+class CustomAPIError extends Error {
+    constructor(message) {
+    super(message)
+    }
+}
+export default CustomAPIError
+```
+
+In folder Middleware we need to make to important files to error-handler & not-fount route 
+```error.handler.js
+
+import { StatusCodes } from 'http-status-codes';
+
+
+const errorHandlerMiddleware = (err, req, res, next) => {
+  let customError = {
+    // set default
+    statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
+    msg: err.message || 'Something went wrong try again later',
+  };
+  if (err.name === 'ValidationError') {
+    customError.msg = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(',');
+    customError.statusCode = 400;
+  }
+  if (err.code && err.code === 11000) {
+    customError.msg = `Duplicate value entered for ${Object.keys(
+      err.keyValue
+    )} field, please choose another value`;
+    customError.statusCode = 400;
+  }
+  if (err.name === 'CastError') {
+    customError.msg = `No item found with id : ${err.value}`;
+    customError.statusCode = 404;
+  }
+
+  return res.status(customError.statusCode).json({ msg: customError.msg });
+};
+
+export default errorHandlerMiddleware
+
+```
+
+```not-found.js
+const notFoundMiddleware = (req,res) => {
+    res.status(404).send('route does not exist')
+}
+
+export default notFoundMiddleware
+```
