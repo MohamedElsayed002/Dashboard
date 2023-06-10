@@ -30,16 +30,6 @@ export const reducer = (state,action) => {
         }
     }
     
-    if(action.type === 'USER_REGISTER') {
-        return {
-            ...state,
-            token : action.payload.data.data.token,
-            userr : action.payload.data.data.user,
-            name : action.payload.data.data.user.name,
-            email  : action.payload.data.data.user.email,
-            role : action.payload.data.data.user.role
-        }
-    }
 
     if(action.type === 'UPDATE_USER') {
         return {

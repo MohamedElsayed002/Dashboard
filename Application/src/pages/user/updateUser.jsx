@@ -60,7 +60,7 @@ const UpdateUser = () => {
                             onChange={handlePhoto}
                 />
                 <Button onClick={handleImageSubmit} className="mt-3 w-100">Save Image</Button>
-                <Form.Text ClassName="text-muted">not working yet</Form.Text>
+                <Form.Text className="text-muted">not working yet</Form.Text>
             </Form.Group>
 
                 <Form.Group className="mb-3">

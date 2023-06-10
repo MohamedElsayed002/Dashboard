@@ -9,7 +9,9 @@ import { Register,
         getSingleUser,
         deleteUser,
         addPhoto,
-        verifyEmail } from '../controllers/auth.controller.js'
+        verifyEmail,
+        forgotPassword,
+        resetPassword } from '../controllers/auth.controller.js'
 import { auth , authorizePermissions } from '../middleware/auth.js'
 import {fileUpload} from '../utils/uploadfiles.js'
 
@@ -25,6 +27,8 @@ authRouter.get('/allUsers' , [auth , authorizePermissions('admin')] , getAllUser
 authRouter.get('/allUsers/:id' , [auth , authorizePermissions('admin')] , getSingleUser)
 authRouter.delete('/deleteUser/:id' , [auth , authorizePermissions('admin')] ,deleteUser)
 authRouter.post('/photo' ,  auth , fileUpload('path') ,addPhoto)
+authRouter.post('/reset-password' , resetPassword)
+authRouter.post('/forgot-password' , forgotPassword)
 
 
 export default authRouter

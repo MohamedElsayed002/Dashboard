@@ -69,16 +69,7 @@ const AppProvider = ({children}) => {
     const {mutate : registerUser  , isLoading } = useMutation({
         mutationFn : (value) => axios.post('http://localhost:3050/api/v1/auth/register' , value),
         onSuccess : (data) => {
-            console.log(data)
-            // queryClient.invalidateQueries({queryKey : ['tasks']})
-            // dispatch({type : 'USER_REGISTER' , payload : {data}})
-            // console.log(data)
-            // localStorage.setItem('token' , data.data.token)
-            // localStorage.setItem('user' , JSON.stringify(data.data.user))
-            // localStorage.setItem('name' , data.data.user.name)  
-            // localStorage.setItem('email' , data.data.user.email)     
-            // localStorage.setItem('role' , data.data.user.role)
-            // toast.success(data.data.message)
+            toast.success(data.data.message)
         },
         onError : (error) => {
             toast.error(error.response.data.msg)

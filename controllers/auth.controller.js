@@ -27,7 +27,6 @@ const Register = async (req,res) => {
     const origin = `http://localhost:5173/verify-email?token=${verificationToken}&email=${email}`
 
     await sendEmail(email , name , `hello ${name} please check your email to verify your account <br/> 
-        code  ${verificationToken}  <br/>
         <a href=${origin}>Here</a> <br/>
     `)
 
@@ -177,6 +176,59 @@ const addPhoto = async (req,res) => {
 
 }
 
+const forgotPassword = async (req,res) => {
+
+    const {email} = req.body
+
+    if(!email) {
+        throw new Error('please provide your email address')
+    }
+
+    const user = await userModel.findOne({email})
+
+    if(user) {
+        const passwordToken = crypto.randomBytes(30).toString('hex')
+        const fiveMinutes = 1000 * 60 * 5
+        const  passwordTokenExpirationDate = new Date(Date.now() + fiveMinutes)
+
+
+        const origin = `http://localhost:5173/user/reset-password?token=${passwordToken}&email=${email}`
+
+        await sendEmail(email , user.name , `hello ${user.name} please reset password by clicking on the following link  : <a href=${origin}>Here</a> <br/>
+    `)
+
+        user.passwordToken = passwordToken
+        user.passwordTokenExpirationDate = passwordTokenExpirationDate
+        await user.save()
+    }
+
+
+
+    res.status(201).json({message : 'please check your email for reset password link'})
+}
+
+const resetPassword = async (req,res) => {
+
+    const {token , email , password} = req.body
+    if(!token || !email || !password) {
+        throw new Error('please provide all values')
+    }
+
+    const user = await userModel.findOne({email})
+    if(user) {
+        const currentDate = new Date()
+        if(user.passwordToken === token && user.passwordTokenExpirationDate > currentDate) {
+            user.password = password
+            user.passwordToken = null
+            user.passwordTokenExpirationDate = null
+            user.save()
+        }
+    }
+
+    res.status(201).json({message : 'password reset successful'})
+
+}
+
 export {
     Register,
     Login,
@@ -186,5 +238,7 @@ export {
     getSingleUser,
     deleteUser,
     addPhoto,
-    verifyEmail
+    verifyEmail,
+    forgotPassword,
+    resetPassword
 }
