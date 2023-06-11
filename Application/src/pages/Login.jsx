@@ -75,6 +75,8 @@ const Login = () => {
                     {loginLoading ? 'loading...' : 'submit'}
                 </Button> Need an account? <NavLink to="/register">Register</NavLink>
             </Form>
+            forgot password? <NavLink to="/forgot-password">reset your password</NavLink>
+
         </div>
     )
 }

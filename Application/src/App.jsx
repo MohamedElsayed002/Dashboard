@@ -2,7 +2,7 @@
 import {Routes , Route} from 'react-router-dom'
 import { SharedLayout , LandingPage , Login , Register , Error , Confirmation , ProtectedUser , Products } from './pages'
 import { ToastContainer } from 'react-toastify';
-import { UpdateUser , Admin , ChangePassword , ShowInfoUser , VerifyEmail , CheckEmail } from './pages/user';
+import { UpdateUser , Admin , ChangePassword , ShowInfoUser , VerifyEmail , CheckEmail , ResetPassword , ForgotPassword } from './pages/user';
 const App = () => {
   return (
     <>
@@ -14,6 +14,8 @@ const App = () => {
       <Route path="/confirmation" element={<Confirmation/>} />
       <Route path="/verify-email" element={<VerifyEmail/>} />
       <Route path="/check-email" element={<CheckEmail/>} />
+      <Route path="/forgot-password" element={<ForgotPassword/>} />
+      <Route path="/reset-password" element={<ResetPassword/>} />
       <Route path="/" element={
           <ProtectedUser>
             <SharedLayout/>

@@ -186,13 +186,17 @@ const forgotPassword = async (req,res) => {
 
     const user = await userModel.findOne({email})
 
+    if(!user) {
+        throw new Error('email not found :) ')
+    }
+
     if(user) {
         const passwordToken = crypto.randomBytes(30).toString('hex')
         const fiveMinutes = 1000 * 60 * 5
         const  passwordTokenExpirationDate = new Date(Date.now() + fiveMinutes)
 
 
-        const origin = `http://localhost:5173/user/reset-password?token=${passwordToken}&email=${email}`
+        const origin = `http://localhost:5173/reset-password?token=${passwordToken}&email=${email}`
 
         await sendEmail(email , user.name , `hello ${user.name} please reset password by clicking on the following link  : <a href=${origin}>Here</a> <br/>
     `)

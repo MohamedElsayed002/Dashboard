@@ -188,6 +188,33 @@ const AppProvider = ({children}) => {
     })
 
 
+
+    const {mutate : forgotPassword} = useMutation({
+        mutationFn : async (value) => {
+            let {data} = await axios.post('http://localhost:3050/api/v1/auth/forgot-password' , value)
+            toast.success(data.message)
+        },
+        onError : (error) => {
+            toast.error(error.response.data.msg)
+        }
+    })
+
+    const {mutate : resetPassword} = useMutation({
+        mutationFn : async (value) => {
+            let {data} = await axios.post('http://localhost:3050/api/v1/auth/reset-password' , value)
+            toast.success(data.message)
+        },
+        onSuccess : () => {
+            setTimeout(() => {
+                navigate('/login')
+            },3000)
+        },
+        onError : (error) => {
+            toast.error(error.response.data.msg)
+        }
+    })
+
+
     const LogoutUser = () => {
         dispatch({type : 'CLEAR_ALL_DATA'})
         localStorage.removeItem('token')
@@ -226,7 +253,9 @@ const AppProvider = ({children}) => {
             singleUserLoading,
             deleteUser,
             updatePhoto,
-            confirmation
+            confirmation,
+            forgotPassword,
+            resetPassword
         }}>
             {children}
         </AppContext.Provider>
