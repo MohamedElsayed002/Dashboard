@@ -142,6 +142,7 @@ const getAllUsers = async (req,res) => {
 }
 
 const getSingleUser = async (req,res) => {
+    console.log(req.user.testUser)
     const {id} = req.params
     let user = await userModel.find({_id : id })
     if(!user) {

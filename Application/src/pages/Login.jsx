@@ -22,6 +22,16 @@ const Login = () => {
         LoginUser(user)
     }
 
+    const handleSubmitDemo = (e) => {
+        e.preventDefault()
+        setUser({
+        ...user,
+        email : 'walena6672@peogi.com',
+        password : '01093588197'
+        })
+        LoginUser(user)
+    }
+
 
     useEffect(() => {
         if(userr) {
@@ -67,16 +77,19 @@ const Login = () => {
                     <Form.Text className="text-muted">        Your password must be 8-20 characters long, contain letters and numbers,
         and must not contain spaces, special characters, or emoji.</Form.Text>
                 </Form.Group>
-                <Button  
+                <Button
+                        className='w-100'
                         type="button"
                         onClick={handleSubmit}
                         disabled={loginLoading}
                 >
                     {loginLoading ? 'loading...' : 'submit'}
-                </Button> Need an account? <NavLink to="/register">Register</NavLink>
+                </Button> Need an account? <NavLink to="/register">Register</NavLink> <br/>
+                <Button onClick={handleSubmitDemo} className="my-3 w-100" variant='success'>test user</Button>
             </Form>
             forgot password? <NavLink to="/forgot-password">reset your password</NavLink>
-
+            <Form.Group> 
+            </Form.Group>
         </div>
     )
 }
