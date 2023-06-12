@@ -35,6 +35,10 @@ cd Application && npm run dev
 ``` js
  import express from 'express'
  import dotenv from 'dotenv'
+ import 'express-async-errors'
+ import cors from 'cors'
+ import morgan from 'morgan'
+ import cloudinary from 'cloudinary'
  dotenv.config()
  
  const app = express()
@@ -102,4 +106,10 @@ const notFoundMiddleware = (req,res) => {
 }
 
 export default notFoundMiddleware
+```
+
+and we need to use error middleware in the main file in app.js
+```js
+ app.use(notFoundMiddleware)
+ app.use(errorHandlerMiddleware)
 ```
