@@ -1,7 +1,7 @@
 # Dashboard
 MERN Stack
 ---
-project link (link)['https://www.linkedin.com/feed/update/urn:li:activity:7078024475929157633/']
+project link (video) ['https://www.linkedin.com/feed/update/urn:li:activity:7078024475929157633/'] <br/>
 in order to run the project <br/>
 
 server side <br/>
